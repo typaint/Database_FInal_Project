@@ -83,7 +83,7 @@ CREATE TABLE IF NOT EXISTS location
         ON DELETE RESTRICT
 ) ENGINE=INNODB;
 
-# crime_info location table
+# crime_info table
 DROP TABLE IF EXISTS crime_info;
 CREATE TABLE IF NOT EXISTS crime_info
 (
