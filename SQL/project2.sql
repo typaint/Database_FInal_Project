@@ -76,7 +76,7 @@ DROP row_num;
 
 SET SQL_SAFE_UPDATES = 1;
 
-########## normalization tables ##########
+########## decomposed tables ##########
 # create complaint_info table
 DROP TABLE IF EXISTS complaint_info;
 CREATE TABLE IF NOT EXISTS complaint_info

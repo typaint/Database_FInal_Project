@@ -136,5 +136,16 @@ SELECT police_mega.prescinct_addr_code, police_mega.report_date, police_mega.cri
 FROM police_mega as police_mega
 LIMIT 25000;
 
-
-
+INSERT INTO patrol_borough
+SELECT	patrol_borough,
+	borough_name,
+    ky_code,
+	offense_desc,
+	pd_code,
+	pd_desc,
+    jurisdiction_desc,
+	jurisdiction_code,
+    complaint_num,
+    complaint_info_id
+FROM police_mega
+LIMIT 25000;
