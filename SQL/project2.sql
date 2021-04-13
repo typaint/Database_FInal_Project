@@ -86,6 +86,8 @@ CREATE TABLE IF NOT EXISTS complaint_info
 	complaint_begin_time	TIME				NOT NULL,
 	complaint_end_date		VARCHAR(10),
 	complaint_end_time		TIME,
+    lat						DOUBLE,
+	lon						DOUBLE,
     PRIMARY KEY (complaint_num)
 ) ENGINE=INNODB;
 
@@ -119,36 +121,56 @@ CREATE TABLE IF NOT EXISTS victim
         ON DELETE RESTRICT
 ) ENGINE=INNODB;
 
-# create patrol_borough table
-DROP TABLE IF EXISTS patrol_borough;
-CREATE TABLE IF NOT EXISTS patrol_borough
+# create borough table
+DROP TABLE IF EXISTS borough;
+CREATE TABLE IF NOT EXISTS borough
 (
 	patrol_borough			VARCHAR(50),
 	borough_name			VARCHAR(50),
-    ky_code					SMALLINT,
-	offense_desc			VARCHAR(50),
-	pd_code					SMALLINT,
-	pd_desc					VARCHAR(100),
-    jurisdiction_desc		VARCHAR(50),
-	jurisdiction_code		SMALLINT,
-    complaint_num			INT,
-    PRIMARY KEY (patrol_borough),
-    CONSTRAINT patrol_boro_fk_complaint_num
-		FOREIGN KEY (complaint_num) REFERENCES complaint_info (complaint_num)
-        ON UPDATE CASCADE
-        ON DELETE RESTRICT
+    prescinct_addr_code		SMALLINT,
+	PRIMARY KEY (patrol_borough)
 ) ENGINE=INNODB;
 
-# create location table
-DROP TABLE IF EXISTS location;
-CREATE TABLE IF NOT EXISTS location
+# create offense table
+DROP TABLE IF EXISTS offense;
+CREATE TABLE IF NOT EXISTS offense
 (
-	lat						DOUBLE,
-	lon						DOUBLE,
+	ky_code					SMALLINT,
+	offense_desc			VARCHAR(50),
+	PRIMARY KEY (ky_code)
+) ENGINE=INNODB;
+    
+# create pd table
+DROP TABLE IF EXISTS pd;
+CREATE TABLE IF NOT EXISTS pd
+(
+	pd_code					SMALLINT,
+	pd_desc					VARCHAR(100),
+	PRIMARY KEY (pd_code)
+) ENGINE=INNODB;
+    
+# create jurisdiction table
+DROP TABLE IF EXISTS jurisdiction;
+CREATE TABLE IF NOT EXISTS jurisdiction
+(
+	jurisdiction_desc		VARCHAR(50),
+	jurisdiction_code		SMALLINT,
+	PRIMARY KEY (jurisidiction_desc)
+) ENGINE=INNODB;
+
+# create extra_info table
+DROP TABLE IF EXISTS extra_info;
+CREATE TABLE IF NOT EXISTS extra_info
+(
 	lat_long				VARCHAR(50),
 	x_coord_code			INT,
 	y_coord_code			INT,
     complaint_num			INT,
+    parks_name				VARCHAR(100),
+    ha_develop				VARCHAR(50),
+    housing_psa				VARCHAR(50),
+    transit_dist			VARCHAR(50),
+    station_name			VARCHAR(50),
     PRIMARY KEY (complaint_num),
     CONSTRAINT location_fk_complaint_num
 		FOREIGN KEY (complaint_num) REFERENCES complaint_info (complaint_num)
@@ -161,17 +183,11 @@ DROP TABLE IF EXISTS crime_info;
 CREATE TABLE IF NOT EXISTS crime_info
 (
     complaint_num			INT,
-	prescinct_addr_code		SMALLINT,
     report_date				VARCHAR(10),
 	crime_stage_code		VARCHAR(50),
 	law_category_code		VARCHAR(50),
     location_occurance		VARCHAR(50),
 	premises_desc			VARCHAR(50),
-	parks_name				VARCHAR(100),
-    ha_develop				VARCHAR(50),
-    housing_psa				VARCHAR(50),
-    transit_dist			VARCHAR(50),
-    station_name			VARCHAR(50),
     PRIMARY KEY (complaint_num),
     CONSTRAINT crime_fk_complaint_num
 		FOREIGN KEY (complaint_num) REFERENCES complaint_info (complaint_num)
