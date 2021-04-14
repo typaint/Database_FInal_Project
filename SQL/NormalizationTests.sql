@@ -1,37 +1,33 @@
 ###### break up patrol_borough table
 # test borough
-SELECT *, count(*) AS count
+SELECT prescinct_addr_code, count(*) AS count, patrol_borough
 FROM	
-    (SELECT count(*) as count, patrol_borough, borough_name
+    (SELECT count(*) as count, patrol_borough, borough_name, prescinct_addr_code
 	FROM police_mega
-	GROUP BY patrol_borough, borough_name
-	ORDER BY patrol_borough) as new_table
-GROUP BY patrol_borough
+	GROUP BY patrol_borough, borough_name, prescinct_addr_code) as new_table
+GROUP BY patrol_borough, prescinct_addr_code
 HAVING count > 2;
 
 # tets ky_code
-SELECT *, count(*) AS count
+SELECT ky_code, count(*) AS count
 FROM	
     (SELECT count(*) as count, ky_code, offense_desc
 	FROM police_mega
 	GROUP BY ky_code, offense_desc
+    HAVING offense_desc IS NOT NULL
 	ORDER BY ky_code) as new_table
 GROUP BY ky_code
-HAVING count > 2;
+HAVING count > 1;
 
 # tets pd_code
-SELECT count(*) AS count, pd_code
+SELECT pd_code, count(*) AS count
 FROM	
     (SELECT count(*) as count, pd_code, pd_desc
 	FROM police_mega
 	GROUP BY pd_code, pd_desc
 	ORDER BY pd_code) as new_table
-GROUP BY pd_code, pd_desc
+GROUP BY pd_code
 HAVING count > 1;
-#############
-select DISTINCT pd_code, pd_desc
-from police_mega
-WHere pd_code = 234 OR pd_code = 694;
 
 # tets jurisdiction_code
 SELECT count(*) AS count, jurisdiction_code
@@ -43,6 +39,10 @@ FROM
 GROUP BY jurisdiction_code
 HAVING count > 1; # null
 
+select distinct jurisdiction_code, jurisdiction_desc
+from police_mega
+where jurisdiction_code IS NULL;
+
 # tets lat lon
 SELECT count(*) AS count, lat_long
 FROM	
@@ -52,12 +52,3 @@ FROM
 	ORDER BY lat_long) as new_table
 GROUP BY lat_long
 HAVING count > 1;
-
-select complaint_num,
-	prescinct_addr_code,
-    report_date,
-	crime_stage_code,
-	law_category_code,
-    location_occurance,
-	premises_desc
-from police_mega;
