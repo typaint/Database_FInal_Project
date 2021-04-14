@@ -137,7 +137,7 @@ FROM police_mega as police_mega
 LIMIT 25000;
 
 INSERT INTO patrol_borough
-SELECT	patrol_borough,
+SELECT patrol_borough,
 	borough_name,
     ky_code,
 	offense_desc,
@@ -145,7 +145,6 @@ SELECT	patrol_borough,
 	pd_desc,
     jurisdiction_desc,
 	jurisdiction_code,
-    complaint_num,
-    complaint_info_id
+    complaint_num
 FROM police_mega
 LIMIT 25000;
