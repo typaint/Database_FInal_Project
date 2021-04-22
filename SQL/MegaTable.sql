@@ -55,10 +55,6 @@ FIELDS TERMINATED BY ','
 		ESCAPED BY '\t'
 IGNORE 1 LINES;
 
-SELECT * FROM police_mega
-where prescinct_addr_code = ''
-limit 50;
-
 ########## clean data ##########
 SET SQL_SAFE_UPDATES = 0;
 # replace blank and NA values with NULL

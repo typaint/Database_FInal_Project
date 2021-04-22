@@ -1,4 +1,3 @@
-###### break up patrol_borough table
 # test borough
 SELECT prescinct_addr_code, count(*) AS count, patrol_borough
 FROM	
@@ -43,7 +42,7 @@ select distinct jurisdiction_code, jurisdiction_desc
 from police_mega
 where jurisdiction_code IS NULL;
 
-# tets lat lon
+# test lat lon
 SELECT count(*) AS count, lat_long
 FROM	
     (SELECT count(*) as count, lat_long, lat, lon
