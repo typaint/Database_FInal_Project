@@ -1,7 +1,10 @@
 # Ty Painter & Tonnar Castellano
 # Project 2
 
-########## create database ##########
+#############################
+##### DATABASE CREATION #####
+#############################
+
 #DROP DATABASE IF EXISTS nypd_police;
 CREATE DATABASE IF NOT EXISTS nypd_police;
 USE nypd_police;
@@ -48,10 +51,9 @@ CREATE TABLE IF NOT EXISTS police_mega
 ) ENGINE=INNODB;
 
 ########## load data into megatable ##########
-LOAD DATA LOCAL INFILE '/Users/TyPainter1/Box/NYPD_Complaint_Data_Historic.csv'
+LOAD DATA LOCAL INFILE '/Users/TyPainter1/Box/NYPD_Complaint_Data_Historic.csv' # URL link
 INTO TABLE police_mega
 FIELDS TERMINATED BY ','
-		OPTIONALLY ENCLOSED BY '"'
 		ESCAPED BY '\t'
 IGNORE 1 LINES;
 
@@ -204,7 +206,7 @@ SET victim_sex = NULL
 WHERE victim_sex = 'NA'
 	OR victim_sex = '';
 
-# modify data types
+# modify data types in mega table
 ALTER TABLE police_mega
 MODIFY COLUMN complaint_num					INT,
 	MODIFY COLUMN complaint_begin_date		VARCHAR(10), # convert to date
@@ -217,8 +219,8 @@ MODIFY COLUMN complaint_num					INT,
 	MODIFY COLUMN offense_desc				VARCHAR(50),
 	MODIFY COLUMN pd_code					SMALLINT,
 	MODIFY COLUMN pd_desc					VARCHAR(100),
-	MODIFY COLUMN crime_stage_code			VARCHAR(50),
-	MODIFY COLUMN law_category_code			VARCHAR(50),
+	MODIFY COLUMN crime_stage_code			VARCHAR(50), # code but more of description
+	MODIFY COLUMN law_category_code			VARCHAR(50), # code but more of description
 	MODIFY COLUMN borough_name				VARCHAR(50),
 	MODIFY COLUMN location_occurance		VARCHAR(50),
 	MODIFY COLUMN premises_desc				VARCHAR(50),
@@ -229,12 +231,12 @@ MODIFY COLUMN complaint_num					INT,
 	MODIFY COLUMN housing_psa				VARCHAR(50),
 	MODIFY COLUMN x_coord_code				INT,
 	MODIFY COLUMN y_coord_code				INT,
-	MODIFY COLUMN suspect_age_group			VARCHAR(50),
+	MODIFY COLUMN suspect_age_group			VARCHAR(50), # range of ages
 	MODIFY COLUMN suspect_race				VARCHAR(50),
 	MODIFY COLUMN suspect_sex				CHAR(1),
 	MODIFY COLUMN transit_dist				VARCHAR(50),
-	MODIFY COLUMN lat						DOUBLE,
-	MODIFY COLUMN lon						DOUBLE,
+	MODIFY COLUMN lat						DOUBLE, # different length decimals
+	MODIFY COLUMN lon						DOUBLE, # different length decimals
 	MODIFY COLUMN lat_long					VARCHAR(50),
 	MODIFY COLUMN patrol_borough			VARCHAR(50),
 	MODIFY COLUMN station_name				VARCHAR(50),
@@ -258,35 +260,37 @@ WHERE report_date != '';
 SET SQL_SAFE_UPDATES = 1;
 
 ########## normalized tables ##########
-# create offense table
-DROP TABLE IF EXISTS offense;
-CREATE TABLE IF NOT EXISTS offense
+
+# create offense table 
+DROP TABLE IF EXISTS offense; 
+CREATE TABLE IF NOT EXISTS offense # describes specific crime committed
 (
 	ky_code					SMALLINT,
 	offense_desc			VARCHAR(50),
-	PRIMARY KEY (ky_code)
+	PRIMARY KEY (ky_code) # functional dependency where ky_code determines offense_desc
 ) ENGINE=INNODB;
     
 # create pd table
-DROP TABLE IF EXISTS pd;
-CREATE TABLE IF NOT EXISTS pd
+DROP TABLE IF EXISTS pd; 
+CREATE TABLE IF NOT EXISTS pd # describes general crime committed
 (
 	pd_code					SMALLINT,
 	pd_desc					VARCHAR(100),
-	PRIMARY KEY (pd_code)
+	PRIMARY KEY (pd_code) # functional dependency where pd_code determines pd_desc
 ) ENGINE=INNODB;
     
 # create jurisdiction table
 DROP TABLE IF EXISTS jurisdiction;
-CREATE TABLE IF NOT EXISTS jurisdiction
+CREATE TABLE IF NOT EXISTS jurisdiction # describes general crime committed
 (
 	jurisdiction_desc		VARCHAR(50),
 	jurisdiction_code		SMALLINT,
-	PRIMARY KEY (jurisdiction_code)
+	PRIMARY KEY (jurisdiction_code) # functional dependency where pd_code determines pd_desc
 ) ENGINE=INNODB;
+
 # create complaint_info table
 DROP TABLE IF EXISTS complaint_info;
-CREATE TABLE IF NOT EXISTS complaint_info
+CREATE TABLE IF NOT EXISTS complaint_info # central table with basic complaint details
 (
 	complaint_num			INT,
 	complaint_begin_date	VARCHAR(10),
@@ -298,48 +302,50 @@ CREATE TABLE IF NOT EXISTS complaint_info
     pd_code					SMALLINT,
     jurisdiction_code		SMALLINT,
     ky_code					SMALLINT,
-    PRIMARY KEY (complaint_num),
+    PRIMARY KEY (complaint_num), # global primary key
     CONSTRAINT pd_fk_complaint 
-		FOREIGN KEY (pd_code) REFERENCES pd (pd_code),
+		FOREIGN KEY (pd_code) REFERENCES pd (pd_code), # foreign key to pd_code functional dependency
 	CONSTRAINT jurisdiction_fk_complaint 
-		FOREIGN KEY (jurisdiction_code) REFERENCES jurisdiction (jurisdiction_code),
+		FOREIGN KEY (jurisdiction_code) REFERENCES jurisdiction (jurisdiction_code), # foreign key to jurisdiction_code functional dependency
 	CONSTRAINT offense_fk_complaint 
-		FOREIGN KEY (ky_code) REFERENCES offense (ky_code)
+		FOREIGN KEY (ky_code) REFERENCES offense (ky_code) # foreign key to ky_code functional dependency
 ) ENGINE=INNODB;
 
 # create suspect table
 DROP TABLE IF EXISTS suspect;
-CREATE TABLE IF NOT EXISTS suspect
+CREATE TABLE IF NOT EXISTS suspect # suspect details
 (
-	complaint_num			INT,
+	suspect_id				INT				AUTO_INCREMENT,
+    complaint_num			INT,
 	suspect_age_group		VARCHAR(50),
 	suspect_race			VARCHAR(50),
 	suspect_sex				CHAR(1),
-    PRIMARY KEY (complaint_num),
+    PRIMARY KEY (suspect_id), # suspect info is identified by suspect_id
     CONSTRAINT suspect_fk_complaint_num
-		FOREIGN KEY (complaint_num) REFERENCES complaint_info (complaint_num)
-        ON UPDATE CASCADE
-        ON DELETE RESTRICT
+		FOREIGN KEY (complaint_num) REFERENCES complaint_info (complaint_num) # foreign key back to central table
+        ON UPDATE CASCADE # ensure universal update
+        ON DELETE CASCADE # prevent delete from child table
 ) ENGINE=INNODB;
 
 # create victim table
 DROP TABLE IF EXISTS victim;
-CREATE TABLE IF NOT EXISTS victim
+CREATE TABLE IF NOT EXISTS victim # victim details
 (
-	complaint_num			INT,
+	victim_id				INT				AUTO_INCREMENT,
+    complaint_num			INT,
 	victim_age_group		VARCHAR(50),
 	victim_race				VARCHAR(50),
 	victim_sex				CHAR(1),
-    PRIMARY KEY (complaint_num),
+    PRIMARY KEY (victim_id), # victim info is identified by victim_id
     CONSTRAINT victim_fk_complaint_num
-		FOREIGN KEY (complaint_num) REFERENCES complaint_info (complaint_num)
-        ON UPDATE CASCADE
-        ON DELETE RESTRICT
+		FOREIGN KEY (complaint_num) REFERENCES complaint_info (complaint_num) # foreign key back to central table
+        ON UPDATE CASCADE # ensure universal update
+        ON DELETE CASCADE # prevent delete from child table
 ) ENGINE=INNODB;
 
 # create extra_info table
 DROP TABLE IF EXISTS extra_info;
-CREATE TABLE IF NOT EXISTS extra_info
+CREATE TABLE IF NOT EXISTS extra_info # data without much purpose without a data dictionary
 (
     lat_long				VARCHAR(50),
 	x_coord_code			INT,
@@ -350,16 +356,16 @@ CREATE TABLE IF NOT EXISTS extra_info
     housing_psa				VARCHAR(50),
     transit_dist			VARCHAR(50),
     station_name			VARCHAR(50),
-    PRIMARY KEY (complaint_num),
+    PRIMARY KEY (complaint_num), # extra info is identified by complaint_num
     CONSTRAINT location_fk_complaint_num
-		FOREIGN KEY (complaint_num) REFERENCES complaint_info (complaint_num)
-        ON UPDATE CASCADE
-        ON DELETE RESTRICT
+		FOREIGN KEY (complaint_num) REFERENCES complaint_info (complaint_num) # foreign key back to central table
+        ON UPDATE CASCADE # ensure universal update
+        ON DELETE CASCADE # prevent delete from child table
 ) ENGINE=INNODB;
 
-# crime_info table
+# create crime_info table
 DROP TABLE IF EXISTS crime_info;
-CREATE TABLE IF NOT EXISTS crime_info
+CREATE TABLE IF NOT EXISTS crime_info # info about the location and stage of the crime
 (
     complaint_num			INT,
     report_date				VARCHAR(10),
@@ -370,14 +376,15 @@ CREATE TABLE IF NOT EXISTS crime_info
     patrol_borough			VARCHAR(50),
 	borough_name			VARCHAR(50),
     prescinct_addr_code		SMALLINT,
-    PRIMARY KEY (complaint_num),
+    PRIMARY KEY (complaint_num), # crime info is identified by complaint_num
     CONSTRAINT crime_fk_complaint_num
-		FOREIGN KEY (complaint_num) REFERENCES complaint_info (complaint_num)
-        ON UPDATE CASCADE
-        ON DELETE RESTRICT
+		FOREIGN KEY (complaint_num) REFERENCES complaint_info (complaint_num) # foreign key back to central table
+        ON UPDATE CASCADE # ensure universal update
+        ON DELETE CASCADE # prevent delete from child table
 ) ENGINE=INNODB;
 
-######### create small mega table ##########
+######### create small mega table ########## 
+# small mega table with subset of data to reduce runtime
 DROP TABLE IF EXISTS police_small_mega;
 CREATE TABLE police_small_mega
 (
@@ -419,6 +426,7 @@ CREATE TABLE police_small_mega
 ) ENGINE=INNODB;
 
 ########## create dirty_data table ##########
+# table includes duplicate rows and records missing a PK
 DROP TABLE IF EXISTS dirty_data;
 CREATE TABLE dirty_data
 (
@@ -459,6 +467,10 @@ CREATE TABLE dirty_data
 	 victim_sex					CHAR(1)
 ) ENGINE=INNODB;
 
+##########################
+##### DATA INSERTION #####
+##########################
+
 ######### insert subset of data from mega table into small mega table ##########
 INSERT INTO police_small_mega
 SELECT *
@@ -466,6 +478,8 @@ FROM police_mega
 LIMIT 100000;
 
 ######### clean data values for functional dependencies ##########
+# all standardizations are results from NormalizationTests script
+# must run NormalizationTests script *BEFORE* the updates below to observe dirty functional dependencies
 SET SQL_SAFE_UPDATES = 0;
 
 # standardize ky_code 116, 120, 124, 125, 343, 345, 364, 677
@@ -518,7 +532,7 @@ WHERE complaint_num IS NULL
 	OR pd_code IS NULL
 	OR jurisdiction_code IS NULL
     OR ky_code IS NULL;
-# delete NULL PK data from police_small_mega
+# delete NULL PK data from police_small_mega since it is inserted into dirty_data table
 DELETE
 FROM police_small_mega
 WHERE complaint_num IS NULL 
@@ -528,25 +542,29 @@ WHERE complaint_num IS NULL
     
 SET SQL_SAFE_UPDATES = 1;
     
-########## insert data into tables ##########
+########## insert data into normalized tables ##########
+
 # insert data into offense table
 INSERT INTO offense
-SELECT DISTINCT ky_code, # fk to complaint_info
+SELECT DISTINCT ky_code, # functional dependency; fk to complaint_info
 	offense_desc
 FROM police_small_mega
 WHERE offense_desc IS NOT NULL; # put null in bad table
+
 # insert data into pd table
 INSERT INTO pd
-SELECT DISTINCT pd_code,
+SELECT DISTINCT pd_code, # functional dependency; fk to complaint_info
 		pd_desc	
 FROM police_small_mega
 WHERE pd_code IS NOT NULL; # put null in bad table
+
 # insert data into jurisdiction table
 INSERT INTO jurisdiction
-SELECT DISTINCT jurisdiction_desc,
+SELECT DISTINCT jurisdiction_desc, # functional dependency; fk to complaint_info
 		jurisdiction_code
 FROM police_small_mega
 WHERE jurisdiction_code IS NOT NULL; # put null in bad table;
+
 # insert data into complaint_info table
 INSERT INTO complaint_info
 SELECT p.complaint_num,
@@ -560,25 +578,25 @@ SELECT p.complaint_num,
 		j.jurisdiction_code,
 		o.ky_code
 FROM police_small_mega p
-JOIN pd ON pd.pd_code = p.pd_code
+JOIN pd ON pd.pd_code = p.pd_code # join pd, jurisdiction, offense tables to enforce foreign key and functional dependency
 	JOIN jurisdiction j ON j.jurisdiction_code = p.jurisdiction_code
     JOIN offense o ON o.ky_code = p.ky_code;
 # insert data into suspect table
-INSERT INTO suspect
+INSERT INTO suspect(complaint_num, suspect_age_group, suspect_race, suspect_sex)
 SELECT c.complaint_num,
 		p.suspect_age_group,
 		p.suspect_race,
 		p.suspect_sex	
 FROM police_small_mega p
-JOIN complaint_info c ON c.complaint_num = p.complaint_num;
+JOIN complaint_info c ON c.complaint_num = p.complaint_num; # join complaint_info to enforce foreign key
 # insert data into victim table
-INSERT INTO victim
+INSERT INTO victim(complaint_num, victim_age_group, victim_race, victim_sex)
 SELECT c.complaint_num,
 		p.victim_age_group,
 		p.victim_race,
 		p.victim_sex
 FROM police_small_mega p
-JOIN complaint_info c ON c.complaint_num = p.complaint_num;
+JOIN complaint_info c ON c.complaint_num = p.complaint_num; # join complaint_info to enforce foreign key
 # insert data into extra_info table
 INSERT INTO extra_info
 SELECT lat_long,
@@ -591,7 +609,7 @@ SELECT lat_long,
 		transit_dist,
 		station_name	
 FROM police_small_mega p
-JOIN complaint_info c ON c.complaint_num = p.complaint_num;
+JOIN complaint_info c ON c.complaint_num = p.complaint_num; # join complaint_info to enforce foreign key
 # insert data into crime_info table
 INSERT INTO crime_info
 SELECT c.complaint_num,
@@ -604,4 +622,4 @@ SELECT c.complaint_num,
 	borough_name,
     prescinct_addr_code	
 FROM police_small_mega p
-JOIN complaint_info c ON c.complaint_num = p.complaint_num;
+JOIN complaint_info c ON c.complaint_num = p.complaint_num; # join complaint_info to enforce foreign key

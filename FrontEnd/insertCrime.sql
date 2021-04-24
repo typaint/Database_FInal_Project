@@ -1,5 +1,5 @@
 USE nypd_police;
-DROP PROCEDURE IF EXISTS insertCrime;
+DROP PROCEDURE IF EXISTS insertCrime; # insert crime details
 DELIMITER //
 CREATE PROCEDURE insertCrime(IN ky_code_new INT,
         IN jurisidiction_code_new INT,
@@ -9,13 +9,11 @@ CREATE PROCEDURE insertCrime(IN ky_code_new INT,
         IN vic_sex_new char(1),
         IN sus_sex_new char(1))
 BEGIN
-  INSERT INTO offense(ky_code)
-  VALUES (ky_code_new);
-  INSERT INTO jurisdiction (juristiction_code)
-  VALUES (jurisidiction_code_new);
-  INSERT INTO pd (pd_code)
-  VALUES (pd_code_new);
-  INSERT INTO complaint_info(complaint_num, complaint_begin_date, victim_sex, suspect_sex, ky_code, juristiction_code, pd_code)
-  VALUES(complaint_num_new, begin_date_new, vic_sex_new, sus_sex_new, ky_code_new, juristiction_code_new, pd_code_new);
+  INSERT INTO complaint_info(complaint_num, complaint_begin_date, ky_code, juristiction_code, pd_code) # enter primary key and foreign keys to satisfy functional dependencies
+  VALUES(complaint_num_new, begin_date_new, ky_code_new, juristiction_code_new, pd_code_new);
+  INSERT INTO suspect(complaint_num, suspect_sex)
+  VALUES(complaint_num_new, suspect_sex_new); # enter complaint_num as FK
+  INSERT INTO victim(complaint_num, victim_sex)
+  VALUES(complaint_num_new, victim_sex_new); # enter complaint_num as FK
 END//
 DELIMITER ;
