@@ -71,8 +71,9 @@ try
                    <!-- The top row is table head with four columns named -- ID, Title ... -->
                   <tr>
                     <th>complaint_num</th>
-                    <th>report_date</th>
-                    <th>borough_name</th>
+                    <th>suspect_sex</th>
+                    <th>suspect_age_group</th>
+                    <th>suspect_race</th>
                     <th>offense_desc</th>
                   </tr>
                 </thead>
@@ -84,8 +85,9 @@ try
                     <tr>
                        <!-- Print (echo) the value of mID in first column of table -->
                       <td><?php echo $row["complaint_num"]; ?></td>
-                      <td><?php echo $row["report_date"]; ?></td>
-                      <td><?php echo $row["borough_name"]; ?></td>
+                      <td><?php echo $row["suspect_sex"]; ?></td>
+                      <td><?php echo $row["suspect_age_group"]; ?></td>
+                      <td><?php echo $row["suspect_race"]; ?></td>
                       <td><?php echo $row["offense_desc"]; ?></td>
                     <!-- End first row. Note this will repeat for each row in the $result variable-->
                     </tr>
