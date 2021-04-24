@@ -34,8 +34,9 @@ if (isset($_POST['field_submit'])) {
     <div id="navbar">
       <!-- See the project.css file to note how ul (unordered list) is stylized.-->
       <ul>
-        <li><a href="index.html">Home</a></li> <!-- LInk to Home page-->
-        <li><a href="getCrime.php">Search Crime</a></li> <!-- LInk to Search Movie page-->
+        <li><a href="index.html">Home</a></li>
+        <li><a href="getCrime.php">Search Crime</a></li>
+        <li><a href="insertCrime.php">Insert Crime</a></li>
         <li><a href="deleteCrime.php">Delete Crime</a></li>
       </ul>
     </div>
