@@ -7,8 +7,8 @@ if (isset($_POST['f_submit'])) {
     $var_complaint_num = $_POST['complaint_num_new'];
     $var_vic = $_POST['vic_sex_new'];
     $var_sus = $_POST['sus_sex_new'];
-    $query = "INSERT INTO complaint_info(ky_code, pd_code, juristiction_code, complaint_num, victim_sex, suspect_sex) "
-            . "VALUES (:ky_code_new, :pd_code_new, :juristiction_code_new, :complaint_num_new, :vic_sex_new, sus_sex_new)";
+    $query = "INSERT INTO complaint_info(ky_code, pd_code, juristiction_code, complaint_num)"
+            . "VALUES (:ky_code_new, :pd_code_new, :juristiction_code_new, :complaint_num_new)";
     try
     {
       $prepared_stmt = $dbo->prepare($query);
@@ -16,14 +16,35 @@ if (isset($_POST['f_submit'])) {
       $prepared_stmt->bindValue(':pd_code_new', $pd_code, PDO::PARAM_INT);
       $prepared_stmt->bindValue(':juristiction_code_new', $jurisdiction_code, PDO::PARAM_INT);
       $prepared_stmt->bindValue(':complaint_num_new', $complaint_num, PDO::PARAM_INT);
-      $prepared_stmt->bindValue(':vic_sex_new', $victim_num, PDO::PARAM_INT);
-      $prepared_stmt->bindValue(':sus_sex_new', $suspect_sex, PDO::PARAM_INT);
       $result = $prepared_stmt->execute();
     }
     catch (PDOException $ex)
     { // Error in database processing.
     echo $sql . "<br>" . $error->getMessage();
     } // HTTP 500 - Internal Server Error
+    $query = "INSERT INTO victim(complaint_num,victim_sex)"
+            . "VALUES (:complaint_num_new,:vic_sex_new)";
+    try
+    {
+      $prepared_stmt = $dbo->prepare($query);
+      $prepared_stmt->bindValue(':vic_sex_new', $jurisdiction_code, PDO::PARAM_INT);
+      $result = $prepared_stmt->execute();
+    }
+    catch (PDOException $ex)
+    { // Error in database processing.
+    echo $sql . "<br>" . $error->getMessage();
+    } // HTTP 500 - Internal Server Error
+    $query = "INSERT INTO suspect(complaint_num,suspect_sex)"
+            . "VALUES (:complaint_num_new,:sus_sex_new)";
+    try
+    {
+      $prepared_stmt = $dbo->prepare($query);
+      $prepared_stmt->bindValue(':sus_sex_new', $jurisdiction_code, PDO::PARAM_INT);
+      $result = $prepared_stmt->execute();
+    }
+    catch (PDOException $ex)
+    { // Error in database processing.
+    echo $sql . "<br>" . $error->getMessage();
 }
 ?>
 <html>
