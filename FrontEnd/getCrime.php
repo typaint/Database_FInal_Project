@@ -6,7 +6,7 @@ if (isset($_POST['field_submit'])) {
     // Will get the value typed in the form text field and save into variable
     $var_complaint_num = $_POST['field_complaint_num'];
     // Save the query into variable called $query. Note that :ph_complaint_num is a place holder
-    $query = "SELECT * FROM police_mega WHERE complaint_num = :ph_complaint_num LIMIT 5";
+    $query = "CALL searchCrime(:complaint_num)";
 
 try
     {
