@@ -12,12 +12,12 @@ if (isset($_POST['f_submit'])) {
     try
     {
       $prepared_stmt = $dbo->prepare($query);
-      $prepared_stmt->bindValue(':ky_code_new', $ky_code, PDO::PARAM_INT);
-      $prepared_stmt->bindValue(':pd_code_new', $pd_code, PDO::PARAM_INT);
-      $prepared_stmt->bindValue(':juristiction_code_new', $jurisdiction_code, PDO::PARAM_INT);
-      $prepared_stmt->bindValue(':complaint_num_new', $complaint_num, PDO::PARAM_INT);
-      $prepared_stmt->bindValue(':vic_sex_new', $victim_num, PDO::PARAM_INT);
-      $prepared_stmt->bindValue(':sus_sex_new', $suspect_sex, PDO::PARAM_INT);
+      $prepared_stmt->bindValue(':ky_code_new', $var_ky_code, PDO::PARAM_INT);
+      $prepared_stmt->bindValue(':pd_code_new', $var_pd_code, PDO::PARAM_INT);
+      $prepared_stmt->bindValue(':juristiction_code_new', $var_jurisdiction_code, PDO::PARAM_INT);
+      $prepared_stmt->bindValue(':complaint_num_new', $var_complaint_num, PDO::PARAM_INT);
+      $prepared_stmt->bindValue(':vic_sex_new', $var_victim_num, PDO::PARAM_INT);
+      $prepared_stmt->bindValue(':sus_sex_new', $var_suspect_sex, PDO::PARAM_INT);
       $result = $prepared_stmt->execute();
     }
     catch (PDOException $ex)
