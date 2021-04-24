@@ -27,7 +27,7 @@ if (isset($_POST['f_submit'])) {
     try
     {
       $prepared_stmt = $dbo->prepare($query);
-      $prepared_stmt->bindValue(':vic_sex_new', $jurisdiction_code, PDO::PARAM_INT);
+      $prepared_stmt->bindValue(':vic_sex_new', $vic_code, PDO::PARAM_INT);
       $result = $prepared_stmt->execute();
     }
     catch (PDOException $ex)
@@ -39,12 +39,13 @@ if (isset($_POST['f_submit'])) {
     try
     {
       $prepared_stmt = $dbo->prepare($query);
-      $prepared_stmt->bindValue(':sus_sex_new', $jurisdiction_code, PDO::PARAM_INT);
+      $prepared_stmt->bindValue(':sus_sex_new', $sus_code, PDO::PARAM_INT);
       $result = $prepared_stmt->execute();
     }
     catch (PDOException $ex)
     { // Error in database processing.
     echo $sql . "<br>" . $error->getMessage();
+  }
 }
 ?>
 <html>
@@ -61,7 +62,7 @@ if (isset($_POST['f_submit'])) {
         <li><a href="deleteCrime.php">Delete Crime</a></li>
       </ul>
     </div>
-<h1> Insert Movie </h1>
+<h1> Insert Crime </h1>
     <form method="post">
       <label for="id_ky_code">ky_code</label>
       <input type="text" name="f_ky_code" id="id_ky_code">
