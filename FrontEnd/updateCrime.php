@@ -2,17 +2,13 @@
 if (isset($_POST['f_submit'])) {
     require_once("conn.php");
     $var_complaint_num = $_POST['f_complaint_num'];
-    $var_begin_time_new = $_POST['f_begin_time_new'];
-    $var_begin_date_new = $_POST['f_begin_date_new'];
     $var_end_time_new = $_POST['f_end_time_new'];
     $var_end_date_new = $_POST['f_end_date_new'];
-    $query = "CALL updateCrime (:complaint_num, :begin_time_new, begin_date_new, end_time_new,end_date_new)";
+    $query = "CALL updateCrime (:complaint_num,end_time_new,end_date_new)";
     try
     {
       $prepared_stmt = $dbo->prepare($query);
       $prepared_stmt->bindValue(':complaint_num', $var_complaint_num, PDO::PARAM_INT);
-      $prepared_stmt->bindValue(':begin_time_new', $var_begin_time_new, PDO::PARAM_INT);
-      $prepared_stmt->bindValue(':begin_date_new', $var_begin_date_new, PDO::PARAM_STR);
       $prepared_stmt->bindValue(':end_time_new', $var_begin_date_new, PDO::PARAM_INT);
       $prepared_stmt->bindValue(':end_date_new', $var_begin_date_new, PDO::PARAM_STR);
       $result = $prepared_stmt->execute();
@@ -38,13 +34,9 @@ if (isset($_POST['f_submit'])) {
     <form method="post">
     	<label for="id_complaint_num">complaint num</label>
     	<input type="text" name="f_complaint_num" id="id_complaint_num">
-      <label for="id_begin_time_new">complaint begin time</label>
-    	<input type="text" name="f_begin_time_new" id="id_begin_time_new">
-      <label for="id_begin_date_new">complaint begin date</label>
-      <input type="text" name="f_begin_date_new" id="id_begin_date_new">
-      <label for="id_end_time_new">complaint end time</label>
+      <label for="id_begin_time_new">complaint end time</label>
       <input type="text" name="f_end_time_new" id="id_end_time_new">
-      <label for="id_end_date_new">complaint date time</label>
+      <label for="id_end_date_new">complaint end date</label>
       <input type="text" name="f_end_date_new" id="id_end_date_new">
     	<input type="submit" name="f_submit" value="Submit">
     </form>
