@@ -12,4 +12,3 @@ BEGIN
 END //
 DELIMITER ;
 
-call searchCrime(242465164)

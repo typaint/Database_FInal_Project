@@ -7,3 +7,4 @@ BEGIN
   WHERE complaint_num = comp_number;
 END//
 DELIMITER ;
+

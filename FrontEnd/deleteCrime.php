@@ -38,7 +38,7 @@ if (isset($_POST['field_submit'])) {
       </ul>
     </div>
     <!-- See the project.css file to note h1 (Heading 1) is stylized.-->
-    <h1> Delete a Movie </h1>
+    <h1> Delete a Crime </h1>
     <!-- This is the start of the form. This form has one text field and one button.
       See the project.css file to note how form is stylized.-->
     <form method="post">
@@ -48,7 +48,7 @@ if (isset($_POST['field_submit'])) {
       <input type="text" name="field_complaint_num" id="id_complaint_num">
       <!-- The input type is a submit button. Note the name and value. The value attribute decides what will be dispalyed on Button. In this case the button shows Delete Movie.
       The name attribute is referred above on line 3 and line 63. -->
-      <input type="submit" name="field_submit" value="Delete Movie">
+      <input type="submit" name="field_submit" value="Delete Crime">
     </form>
     <?php
       if (isset($_POST['field_submit'])) {

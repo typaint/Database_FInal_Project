@@ -3,7 +3,7 @@
 if (isset($_POST['field_submit'])) {
   // Refer to conn.php file and open a connection.
   require_once("conn.php");
-  $query = "CALL borough_view";
+  $query = "SELECT * FROM borough_view";
 
 try
     {

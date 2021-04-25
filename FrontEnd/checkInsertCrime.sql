@@ -28,9 +28,8 @@ BEGIN
             SET MESSAGE_TEXT = compNumError;
 	END IF;
     
-    IF LENGTH(NEW.complaint_begin_date) != 8 THEN # check that date is 8 chars long
-		SIGNAL SQLSTATE '45000' 
-            SET MESSAGE_TEXT = dateError;
+    IF LENGTH(NEW.complaint_begin_date) != 10 THEN # check that date is 8 chars long
+		SET NEW.complaint_begin_date = CURDATE();
 	ELSE
 		SET NEW.complaint_begin_date = str_to_date(NEW.complaint_begin_date, '%m/%d/%Y'); # convert to date format
 	END IF;
