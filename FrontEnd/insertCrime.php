@@ -14,8 +14,8 @@ if (isset($_POST['f_submit'])) {
       $prepared_stmt->bindValue(':ky_code', $var_ky_code, PDO::PARAM_INT);
       $prepared_stmt->bindValue(':pd_code', $var_pd_code, PDO::PARAM_STR);
       $prepared_stmt->bindValue(':jurisdiction_code', $var_jurisdiction_code, PDO::PARAM_INT);
-      $prepared_stmt->bindValue(':complaint_num', $var_complaint_num, PDO::PARAM_STR);
-      $prepared_stmt->bindValue(':begin_time_new', $var_begin_time_new, PDO::PARAM_STR);
+      $prepared_stmt->bindValue(':complaint_num', $var_complaint_num, PDO::PARAM_INT);
+      $prepared_stmt->bindValue(':begin_time_new', $var_begin_time_new, PDO::PARAM_INT);
       $result = $prepared_stmt->execute();
     }
     catch (PDOException $ex)
