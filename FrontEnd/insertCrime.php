@@ -57,9 +57,6 @@ if (isset($_POST['f_submit'])) {
     <div id="navbar">
       <ul>
         <li><a href="index.html">Home</a></li>
-        <li><a href="getCrime.php">Search Crime</a></li>
-        <li><a href="insertCrime.php">Insert Crime</a></li>
-        <li><a href="deleteCrime.php">Delete Crime</a></li>
       </ul>
     </div>
 <h1> Insert Crime </h1>

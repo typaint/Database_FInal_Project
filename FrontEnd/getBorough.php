@@ -1,20 +1,14 @@
 <?php
 // If the all the variables are set when the Submit button is clicked...
 if (isset($_POST['field_submit'])) {
-    // Refer to conn.php file and open a connection.
-    require_once("conn.php");
-    // Will get the value typed in the form text field and save into variable
-    $var_complaint_num = $_POST['field_complaint_num'];
-    // Save the query into variable called $query. Note that :ph_complaint_num is a place holder
-    $query = "CALL searchCrime(:complaint_num)";
+  // Refer to conn.php file and open a connection.
+  require_once("conn.php");
+  $query = "CALL borough_view";
 
 try
     {
       // Create a prepared statement. Prepared statements are a way to eliminate SQL INJECTION.
       $prepared_stmt = $dbo->prepare($query);
-      //bind the value saved in the variable $var_complaint_num to the place holder :ph_complaint_num
-      // Use PDO::PARAM_STR to sanitize user string.
-      $prepared_stmt->bindValue(':ph_complaint_num', $var_complaint_num, PDO::PARAM_STR);
       $prepared_stmt->execute();
       // Fetch all the values based on query and save that to variable $result
       $result = $prepared_stmt->fetchAll();
@@ -41,18 +35,13 @@ try
       </ul>
     </div>
 
-    <h1> Search Crime by Complaint Number</h1>
+    <h1> Crimes in Boroughs</h1>
     <!-- This is the start of the form. This form has one text field and one button.
       See the project.css file to note how form is stylized.-->
     <form method="post">
-
-      <label for="id_complaint_num">Complaint Number</label>
-      <!-- The input type is a text field. Note the name and id. The name attribute
-        is referred above on line 7. $var_complaint_num = $_POST['field_complaint_num']; id attribute is referred in label tag above on line 52-->
-      <input type="text" name="field_complaint_num" id = "id_complaint_num">
       <!-- The input type is a submit button. Note the name and value. The value attribute decides what will be dispalyed on Button. In this case the button shows Submit.
       The name attribute is referred  on line 3 and line 61. -->
-      <input type="submit" name="field_submit" value="Submit">
+      <input type="submit" name="field_submit" value="Click to Search all Crime in Boroughs">
     </form>
 
     <?php
@@ -67,11 +56,8 @@ try
                 <thead>
                    <!-- The top row is table head with four columns named -- ID, Title ... -->
                   <tr>
-                    <th>complaint_num</th>
-                    <th>suspect_sex</th>
-                    <th>suspect_age_group</th>
-                    <th>suspect_race</th>
-                    <th>offense_desc</th>
+                    <th>borough_name</th>
+                    <th>crime_count</th>
                   </tr>
                 </thead>
                  <!-- Create rest of the the body of the table -->
@@ -81,11 +67,8 @@ try
 
                     <tr>
                        <!-- Print (echo) the value of mID in first column of table -->
-                      <td><?php echo $row["complaint_num"]; ?></td>
-                      <td><?php echo $row["suspect_sex"]; ?></td>
-                      <td><?php echo $row["suspect_age_group"]; ?></td>
-                      <td><?php echo $row["suspect_race"]; ?></td>
-                      <td><?php echo $row["offense_desc"]; ?></td>
+                      <td><?php echo $row["borough_name"]; ?></td>
+                      <td><?php echo $row["crime_count"]; ?></td>
                     <!-- End first row. Note this will repeat for each row in the $result variable-->
                     </tr>
                   <?php } ?>
@@ -96,7 +79,7 @@ try
 
         <?php } else { ?>
           <!-- IF query execution resulted in error display the following message-->
-          <h3>Sorry, no results found for complaint_num <?php echo $_POST['complaint_num']; ?>. </h3>
+          <h3>Sorry, no results found for this City <?php; ?>. </h3>
         <?php }
     } ?>
 

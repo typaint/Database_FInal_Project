@@ -35,9 +35,6 @@ if (isset($_POST['field_submit'])) {
       <!-- See the project.css file to note how ul (unordered list) is stylized.-->
       <ul>
         <li><a href="index.html">Home</a></li>
-        <li><a href="getCrime.php">Search Crime</a></li>
-        <li><a href="insertCrime.php">Insert Crime</a></li>
-        <li><a href="deleteCrime.php">Delete Crime</a></li>
       </ul>
     </div>
     <!-- See the project.css file to note h1 (Heading 1) is stylized.-->
