@@ -1,8 +1,8 @@
 USE nypd_police;
-DROP TRIGGER IF EXISTS checkReportDate;
+DROP TRIGGER IF EXISTS checkEndDate;
 
 DELIMITER $$
-CREATE TRIGGER checkDate # check a valid date is entered correctly; mm/dd/yyyy format
+CREATE TRIGGER checkEndDate # check a valid date is entered correctly; mm/dd/yyyy format
 BEFORE UPDATE 
 ON complaint_info FOR EACH ROW 
 BEGIN

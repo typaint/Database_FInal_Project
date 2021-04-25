@@ -4,7 +4,7 @@ DELIMITER //
 CREATE PROCEDURE searchCrime(IN comp_number INT) # stored procedure to look at suspect details invloved in a crime
 BEGIN
     SELECT complaint_info.complaint_num, suspect.suspect_sex, suspect.suspect_age_group, suspect.suspect_race,
-			offense.offense_desc
+			offense.offense_desc, complaint_info.complaint_end_date, complaint_info.complaint_end_time
 	FROM complaint_info complaint_info
 	LEFT JOIN suspect suspect on complaint_info.complaint_num = suspect.complaint_num
 	LEFT JOIN offense offense on complaint_info.ky_code = offense.ky_code 

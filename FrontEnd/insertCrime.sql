@@ -13,11 +13,5 @@ END//
 DELIMITER ;
 
 
-call insertCrime(113,729,0,2,1);
-
-
-select * from complaint_info;
-call searchCrime(2);
-
 
 

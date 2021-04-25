@@ -72,6 +72,8 @@ try
                     <th>suspect_age_group</th>
                     <th>suspect_race</th>
                     <th>offense_desc</th>
+                    <th>complaint_end_date</th>
+                    <th>complaint_end_time</th>
                   </tr>
                 </thead>
                  <!-- Create rest of the the body of the table -->
@@ -86,6 +88,8 @@ try
                       <td><?php echo $row["suspect_age_group"]; ?></td>
                       <td><?php echo $row["suspect_race"]; ?></td>
                       <td><?php echo $row["offense_desc"]; ?></td>
+                      <td><?php echo $row["complaint_end_date"]; ?></td>
+                      <td><?php echo $row["complaint_end_time"]; ?></td>
                     <!-- End first row. Note this will repeat for each row in the $result variable-->
                     </tr>
                   <?php } ?>
