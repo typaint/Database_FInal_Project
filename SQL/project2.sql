@@ -10,7 +10,7 @@ CREATE DATABASE IF NOT EXISTS nypd_police;
 USE nypd_police;
 
 ######### create megatable ##########
-DROP TABLE IF EXISTS police_mega;
+#DROP TABLE IF EXISTS police_mega;
 CREATE TABLE IF NOT EXISTS police_mega
 (
 	complaint_num			VARCHAR(50),
@@ -475,7 +475,7 @@ CREATE TABLE dirty_data
 INSERT INTO police_small_mega
 SELECT *
 FROM police_mega
-LIMIT 100000;
+LIMIT 10;
 
 ######### clean data values for functional dependencies ##########
 # all standardizations are results from NormalizationTests script
