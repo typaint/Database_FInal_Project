@@ -12,3 +12,6 @@ BEGIN
 END //
 DELIMITER ;
 
+call searchCrime(492142357);
+
+select * from complaint_info;

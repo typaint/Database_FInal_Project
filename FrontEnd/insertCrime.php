@@ -6,10 +6,8 @@ if (isset($_POST['f_submit'])) {
     $jurisdiction_code = $_POST['jurisidiction_code_new'];
     $complaint_num = $_POST['complaint_num_new'];
     $complaint_begin_time= $_POST['complaint_begin_time_new'];
-    $victim_sex = $_POST['vic_sex_new'];
-    $suspect_sex = $_POST['sus_sex_new'];
-    $query = "CALL insertCrime (ky_code, pd_code, juristiction_code, complaint_begin_time,complaint_num)"
-            . "VALUES (:ky_code_new, :pd_code_new, :juristiction_code_new,:complaint_begin_time_new, :complaint_num_new,:vic_sex_new,:sus_sex_new)";
+    $query = "CALL insertCrime (ky_code, pd_code, juristiction_code, complaint_begin_time, complaint_num"
+            . "VALUES (:ky_code_new, :pd_code_new, :juristiction_code_new,:complaint_begin_time_new, :complaint_num_new)";
     try
     {
       $prepared_stmt = $dbo->prepare($query);
@@ -18,8 +16,6 @@ if (isset($_POST['f_submit'])) {
       $prepared_stmt->bindValue(':juristiction_code_new', $jurisdiction_code, PDO::PARAM_INT);
       $prepared_stmt->bindValue(':complaint_begin_time_new', $complaint_begin_time, PDO::PARAM_INT);
       $prepared_stmt->bindValue(':complaint_num_new', $complaint_num, PDO::PARAM_INT);
-      $prepared_stmt->bindValue(':vic_sex_new', $victim_sex, PDO::PARAM_STRING);
-      $prepared_stmt->bindValue(':sus_sex_new', $suspect_sex, PDO::PARAM_STRING);
       $result = $prepared_stmt->execute();
     }
     catch (PDOException $ex)
@@ -51,10 +47,6 @@ if (isset($_POST['f_submit'])) {
     	<input type="text" name="f_complaint_begin_time" id="id_complaint_begin_time">
     	<label for="id_complaint_num">complaint_num</label>
     	<input type="text" name="f_complaint_num" id="id_complaint_num">
-      <label for="id_victim_sex">victim_sex</label>
-    	<input type="text" name="f_victim_sex" id="id_victim_sex">
-      <label for="id_suspect_sex">suspect_sex</label>
-    	<input type="text" name="f_suspect_sex" id="id_suspect_sex">
     	<input type="submit" name="f_submit" value="Submit">
     </form>
     <?php
