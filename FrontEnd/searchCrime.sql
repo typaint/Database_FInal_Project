@@ -11,3 +11,4 @@ BEGIN
 	WHERE complaint_info.complaint_num = comp_number;
 END //
 DELIMITER ;
+
