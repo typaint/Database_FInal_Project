@@ -14,7 +14,7 @@ try
       $prepared_stmt = $dbo->prepare($query);
       //bind the value saved in the variable $var_complaint_num to the place holder :ph_complaint_num
       // Use PDO::PARAM_STR to sanitize user string.
-      $prepared_stmt->bindValue(':ph_complaint_num', $var_complaint_num, PDO::PARAM_STR);
+      $prepared_stmt->bindValue(':complaint_num', $var_complaint_num, PDO::PARAM_STR);
       $prepared_stmt->execute();
       // Fetch all the values based on query and save that to variable $result
       $result = $prepared_stmt->fetchAll();

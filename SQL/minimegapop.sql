@@ -1,57 +1,5 @@
 use nypd_police;
 
-select * 
-from complaint_info 
-#where complaint_num = 100042648
-limit 5;
-
-DROP TABLE IF EXISTS victim, suspect, extra_info, dirty_data, crime_info, complaint_info, pd, offense, jurisdiction;
-
-DROP TABLE IF EXISTS police_mini_mega;
-CREATE TABLE police_mini_mega
-(
-	 complaint_num				INT,
-	 complaint_begin_date		DATE,
-	 complaint_begin_time		TIME,
-	 complaint_end_date			DATE,
-	 complaint_end_time			TIME,
-	 prescinct_addr_code		SMALLINT,
-	 report_date				DATE,
-	 ky_code					SMALLINT,
-	 offense_desc				VARCHAR(50),
-	 pd_code					SMALLINT,
-	 pd_desc					VARCHAR(100),
-	 crime_stage_code			VARCHAR(50),
-	 law_category_code			VARCHAR(50),
-	 borough_name				VARCHAR(50),
-	 location_occurance			VARCHAR(50),
-	 premises_desc				VARCHAR(50),
-	 jurisdiction_desc			VARCHAR(50),
-	 jurisdiction_code			SMALLINT,
-	 parks_name					VARCHAR(100),
-     ha_develop					VARCHAR(50),
-	 housing_psa				VARCHAR(50),
-	 x_coord_code				INT,
-	 y_coord_code				INT,
-	 suspect_age_group			VARCHAR(50),
-	 suspect_race				VARCHAR(50),
-	 suspect_sex				CHAR(1),
-	 transit_dist				VARCHAR(50),
-	 lat						DOUBLE,
-	 lon						DOUBLE,
-	 lat_long					VARCHAR(50),
-	 patrol_borough				VARCHAR(50),
-	 station_name				VARCHAR(50),
-	 victim_age_group			VARCHAR(50),
-	 victim_race				VARCHAR(50),
-	 victim_sex					CHAR(1)
-) ENGINE=INNODB;
-
-INSERT INTO police_mini_mega
-SELECT *
-FROM police_small_mega
-LIMIT 10;
-
 ######### clean data values for functional dependencies ##########
 # all standardizations are results from NormalizationTests script
 # must run NormalizationTests script *BEFORE* the updates below to observe dirty functional dependencies
@@ -198,3 +146,7 @@ SELECT c.complaint_num,
     prescinct_addr_code	
 FROM police_mini_mega p
 JOIN complaint_info c ON c.complaint_num = p.complaint_num; # join complaint_info to enforce foreign key
+
+
+
+select * from complaint_info
