@@ -7,7 +7,7 @@ FROM
 GROUP BY patrol_borough, prescinct_addr_code
 HAVING count > 2;
 
-# tets ky_code
+# tests ky_code
 SELECT ky_code, count(*) AS count
 FROM	
     (SELECT count(*) as count, ky_code, offense_desc
@@ -18,7 +18,11 @@ FROM
 GROUP BY ky_code
 HAVING count > 1;
 
-# tets pd_code
+SELECT DISTINCT ky_code, offense_desc
+FROM police_mega
+WHERE ky_code = 124;
+
+# tests pd_code
 SELECT pd_code, count(*) AS count
 FROM	
     (SELECT count(*) as count, pd_code, pd_desc
@@ -28,7 +32,11 @@ FROM
 GROUP BY pd_code
 HAVING count > 1;
 
-# tets jurisdiction_code
+SELECT DISTINCT pd_code, pd_desc
+FROM police_mega
+WHERE pd_code = 234;
+
+# tests jurisdiction_code
 SELECT count(*) AS count, jurisdiction_code
 FROM	
     (SELECT count(*) as count, jurisdiction_code, jurisdiction_desc
@@ -38,9 +46,9 @@ FROM
 GROUP BY jurisdiction_code
 HAVING count > 1; # null
 
-select distinct jurisdiction_code, jurisdiction_desc
-from police_mega
-where jurisdiction_code IS NULL;
+SELECT DISTINCT jurisdiction_code, jurisdiction_desc
+FROM police_mega
+WHERE jurisdiction_code IS NULL;
 
 # test lat lon
 SELECT count(*) AS count, lat_long

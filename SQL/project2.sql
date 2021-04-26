@@ -5,12 +5,12 @@
 ##### DATABASE CREATION #####
 #############################
 
-#DROP DATABASE IF EXISTS nypd_police;
+DROP DATABASE IF EXISTS nypd_police;
 CREATE DATABASE IF NOT EXISTS nypd_police;
 USE nypd_police;
 
 ######### create megatable ##########
-#DROP TABLE IF EXISTS police_mega;
+DROP TABLE IF EXISTS police_mega;
 CREATE TABLE IF NOT EXISTS police_mega
 (
 	complaint_num			VARCHAR(50),
@@ -54,6 +54,7 @@ CREATE TABLE IF NOT EXISTS police_mega
 LOAD DATA LOCAL INFILE '/Users/TyPainter1/Box/NYPD_Complaint_Data_Historic.csv' # URL link
 INTO TABLE police_mega
 FIELDS TERMINATED BY ','
+		OPTIONALLY ENCLOSED BY '"'
 		ESCAPED BY '\t'
 IGNORE 1 LINES;
 
@@ -651,14 +652,14 @@ DROP TRIGGER IF EXISTS checkInsertCrime;
 
 DELIMITER $$
 CREATE TRIGGER checkInsertCrime # check the values inserted into the complaint_info table
-BEFORE UPDATE 
+BEFORE INSERT
 ON complaint_info FOR EACH ROW 
 BEGIN
 	DECLARE kyError, jurisdictionError, pdError, compNumError, dateError, sexError VARCHAR(30); # declare error codes
     
     SET kyError = "Invalid ky code."; # set error code messages
     SET pdError = "Invalid pd code.";
-    SET compNumError = "Invalid comlaint number.";
+    SET compNumError = "Invalid complaint number.";
     SET dateError = "Invalid date format.";
     
     IF NEW.ky_code NOT IN (SELECT DISTINCT ky_code FROM offense) THEN # ensure ky_code is a current and valid ky_code
@@ -759,8 +760,9 @@ DELIMITER //
 CREATE PROCEDURE updateCrime(IN comp_number INT, IN end_time_new TIME, IN end_date_new CHAR(10)) # stored procedure to update end date & time
 BEGIN
     UPDATE complaint_info
-    SET complaint_end_time = end_time_new,
+    SET complaint_end_time = end_time_new, # hh:mm:ss
         complaint_end_date = end_date_new # MM/DD/YYYY
 	WHERE complaint_num = comp_number;
 END //
 DELIMITER ;
+
