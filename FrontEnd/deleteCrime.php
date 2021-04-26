@@ -42,7 +42,7 @@ if (isset($_POST['field_submit'])) {
     <!-- This is the start of the form. This form has one text field and one button.
       See the project.css file to note how form is stylized.-->
     <form method="post">
-      <label for="id_complaint_num">Complaint #</label>
+      <label for="id_complaint_num">Complaint Number</label>
       <!-- The input type is a text field. Note the name and id. The name attribute
         is referred above on line 7. $var_complaint_num = $_POST['field_complaint_num']; -->
       <input type="text" name="field_complaint_num" id="id_complaint_num">
