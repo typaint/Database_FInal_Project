@@ -41,7 +41,7 @@ try
       </ul>
     </div>
 
-    <h1> Search Crime by Complaint Number</h1>
+    <h1> Search Crime </h1>
     <!-- This is the start of the form. This form has one text field and one button.
       See the project.css file to note how form is stylized.-->
     <form method="post">
@@ -67,13 +67,13 @@ try
                 <thead>
                    <!-- The top row is table head with four columns named -- ID, Title ... -->
                   <tr>
-                    <th>complaint_num</th>
-                    <th>suspect_sex</th>
-                    <th>suspect_age_group</th>
-                    <th>suspect_race</th>
-                    <th>offense_desc</th>
-                    <th>complaint_end_date</th>
-                    <th>complaint_end_time</th>
+                    <th>Complaint Number</th>
+                    <th>Suspect Sex</th>
+                    <th>Suspect Age</th>
+                    <th>Suspect Race</th>
+                    <th>Offense Description</th>
+                    <th>End Date</th>
+                    <th>End Time</th>
                   </tr>
                 </thead>
                  <!-- Create rest of the the body of the table -->
@@ -100,7 +100,7 @@ try
 
         <?php } else { ?>
           <!-- IF query execution resulted in error display the following message-->
-          <h3>Sorry, no results found for complaint_num <?php echo $_POST['complaint_num']; ?>. </h3>
+          <h3>Sorry, no results found for complaint number <?php echo $_POST['complaint_num']; ?>. </h3>
         <?php }
     } ?>
 

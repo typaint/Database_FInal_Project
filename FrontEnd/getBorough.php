@@ -41,7 +41,7 @@ try
     <form method="post">
       <!-- The input type is a submit button. Note the name and value. The value attribute decides what will be dispalyed on Button. In this case the button shows Submit.
       The name attribute is referred  on line 3 and line 61. -->
-      <input type="submit" name="field_submit" value="Click to Search all Crime in Boroughs">
+      <input type="submit" name="field_submit" value="Click to Search Crime in Boroughs">
     </form>
 
     <?php
@@ -56,8 +56,8 @@ try
                 <thead>
                    <!-- The top row is table head with four columns named -- ID, Title ... -->
                   <tr>
-                    <th>borough_name</th>
-                    <th>crime_count</th>
+                    <th>Borough Name</th>
+                    <th>Number of Crimes</th>
                   </tr>
                 </thead>
                  <!-- Create rest of the the body of the table -->
@@ -79,7 +79,7 @@ try
 
         <?php } else { ?>
           <!-- IF query execution resulted in error display the following message-->
-          <h3>Sorry, no results found for this City <?php; ?>. </h3>
+          <h3>Sorry, no results found for this Borough. <?php; ?>. </h3>
         <?php }
     } ?>
 

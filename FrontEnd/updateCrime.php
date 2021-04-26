@@ -32,13 +32,13 @@ if (isset($_POST['f_submit'])) {
     </div>
 <h1> Update Crime </h1>
     <form method="post">
-    	<label for="id_complaint_num">complaint num</label>
+    	<label for="id_complaint_num">Complaint Number</label>
     	<input type="text" name="f_complaint_num" id="id_complaint_num">
 
-      <label for="id_end_time_new">complaint end time</label>
+      <label for="id_end_time_new">End Time (hh:mm:ss)</label>
       <input type="text" name="f_end_time_new" id="id_end_time_new">
 
-      <label for="id_end_date_new">complaint end date</label>
+      <label for="id_end_date_new">End Date (MM/DD/YYYY)</label>
       <input type="text" name="f_end_date_new" id="id_end_date_new">
 
     	<input type="submit" name="f_submit" value="Submit">

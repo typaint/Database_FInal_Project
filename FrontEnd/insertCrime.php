@@ -35,17 +35,17 @@ if (isset($_POST['f_submit'])) {
         <li><a href="index.html">Home</a></li>
       </ul>
     </div>
-<h1> Add Crime </h1>
+<h1> Insert Crime </h1>
     <form method="post">
-    	<label for="id_ky_code">ky code</label>
+    	<label for="id_ky_code">Offense Code</label>
     	<input type="text" name="f_ky_code" id="id_ky_code">
-    	<label for="id_pd_code">pd code</label>
+    	<label for="id_pd_code">Crime Code</label>
     	<input type="text" name="f_pd_code" id="id_pd_code">
-    	<label for="id_jurisdiction_code">jurisdiction code</label>
+    	<label for="id_jurisdiction_code">Jurisdiction Code</label>
     	<input type="text" name="f_jurisdiction_code" id="id_jurisdiction_code">
-    	<label for="id_complaint_num">complaint num</label>
+    	<label for="id_complaint_num">Complaint Number</label>
     	<input type="text" name="f_complaint_num" id="id_complaint_num">
-      <label for="id_begin_time_new">complaint begin time</label>
+      <label for="id_begin_time_new">Begin Time (hh:mm:ss)</label>
     	<input type="text" name="f_begin_time_new" id="id_begin_time_new">
     	<input type="submit" name="f_submit" value="Submit">
     </form>

@@ -56,8 +56,8 @@ try
                 <thead>
                    <!-- The top row is table head with four columns named -- ID, Title ... -->
                   <tr>
-                    <th>crime_type</th>
-                    <th>crime_count</th>
+                    <th>Crime Type</th>
+                    <th>Crime Count</th>
                   </tr>
                 </thead>
                  <!-- Create rest of the the body of the table -->
