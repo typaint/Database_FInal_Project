@@ -1,5 +1,12 @@
 body{
-padding-left: 100px;
+padding-left: 50px;
+padding-right: -25px;
+background-color: white;
+}
+
+body {
+	width: 100%;
+	max-width: 1024px; /* or whatever width you want */
 }
 
 div#navbar {
@@ -9,10 +16,12 @@ div#navbar {
 }
 
 div#navbar ul {
-	line-height: 40px;	
-	font-size: 24px;
+  down: 50;
+	line-height: 20px;
+	font-size: 20px;
 	margin: 0px;
  	padding: 0px;
+  width: 150%;
 }
 
 div#navbar li {
@@ -46,7 +55,7 @@ td, th {
 }
 
 h1{
-	color:green;
+	color:blue;
 }
 
 
