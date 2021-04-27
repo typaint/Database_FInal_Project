@@ -1,0 +1,59 @@
+body{
+padding-left: 50px;
+padding-right: -25px;
+background-color: white;
+}
+body {
+	width: 100%;
+	max-width: 1024px; /* or whatever width you want */
+}
+div#navbar {
+ height: 40px;
+ width: 600px;
+ background-repeat:repeat-x;
+}
+div#navbar ul {
+  down: 50;
+	line-height: 20px;
+	font-size: 20px;
+	margin: 0px;
+ 	padding: 0px;
+  width: 150%;
+}
+div#navbar li {
+ list-style-type: none;
+ display: inline;
+ padding-right: 15px;
+}
+div#navbar li a {
+ text-decoration: none;
+}
+div#navbar li a:hover{
+ color: red;
+ border-bottom: dashed 1px;
+}
+label {
+  display: block;
+  margin: 5px 0;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+td, th {
+  padding: 5px 30px 5px 30px;
+  border-bottom: 1px solid #aaa;
+}
+h1{
+	color:blue;
+}
+h3{
+	color:#ff0000;
+}
+footer{
+	width:600px;
+	border-top: dotted 1px;
+}
+p{
+	width: 600px;
+}
