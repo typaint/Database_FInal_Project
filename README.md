@@ -1,10 +1,12 @@
 # Project2
 
-For this project we got data from the follwing link:
+For this project we got data from the follwing link: https://www.kaggle.com/brunacmendes/nypd-complaint-data-historic-20062019.
+
+There is a basic walkthrough of how the front end application works at: https://www.youtube.com/watch?v=xO_VUzaD6cM.
 
 Our applicatition is written in four languages: SQL, PHP, HTML, and CSS.
 
-The SQL data is contained in the file project 2. It is broken into 3 major parts. The first part is the reading in of the data. The second part is the data cleaning and insertation. The third major part is the advanced feature creation. In order to succesfully import the data one needs to set the values in the SQL editor to a sufficentefly high number. that the user has the priviledges to read in an inline file. It is also worth noting that the advanced features in the front end file do not need to be run but are there for clarification as they are already ran in the main SQL body of code.
+The SQL data is contained in the file project 2. It is broken into 3 major parts. The first part is the reading in of the data. The second part is the data cleaning and insertation. The third major part is the advanced feature creation. In order to succesfully import the data one needs to set the values in the SQL editor that correspond to query length to a sufficiently high number. that the user has the priviledges to read in an inline file. It is also worth noting that the advanced features in the front end file do not need to be run but are there for clarification as they are already ran in the main SQL body of code.
 
 The PHP code is broken up into multiple parts that is contained in the frontend folder. The files deleteCrime, getCrime, and insertCrime are the main DML features that connect to database and perform the operations that the names imply. The getBorough and getType run more highlevel views. 
 
